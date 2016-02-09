@@ -50,6 +50,8 @@ cmd:option('-maxIter', 2, 'maximum nb of iterations for CG and LBFGS')
 cmd:option('-type', 'double', 'type: double | float | cuda')
 cmd:option('-transferF','sigm','transferF: tanh | sigm | rectified')
 cmd:option('-dropout',false, 'dropout: true | false')
+cmd:option('-pooling','max','pooling: l2 | max')
+
 
 cmd:text()
 opt = cmd:parse(arg or {})
