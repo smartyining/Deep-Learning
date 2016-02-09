@@ -71,7 +71,6 @@ function test(dataSet)
       -- restore parameters
       parameters:copy(cachedparams)
    end
-
    
    -- next iteration:
    confusion:zero()
