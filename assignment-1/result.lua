@@ -119,9 +119,7 @@ function test()
       -- test sample
       local pred = model:forward(input)
 val,ind=torch.max(pred,1)        
-	print(ind[1])
-	print(target)
-	f:write(ind[1])
+	f:write(ind[1]%10)
 	f:write("\n")
    end
    f.close()
