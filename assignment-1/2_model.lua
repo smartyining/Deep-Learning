@@ -134,9 +134,7 @@ elseif opt.model == 'convnet' then
          end
          model:add(nn.Linear(nstates[3], noutputs))
 
-         if opt.dropout then
-            model:add(nn.Dropout())
-         end
+
 
       else
          model = nn.Sequential()
@@ -171,9 +169,6 @@ elseif opt.model == 'convnet' then
          end
          model:add(nn.Linear(nstates[3], noutputs))  
 
-         if opt.dropout then
-            model:add(nn.Dropout())
-         end
       end       
 
    elseif opt.transferF=='tanh' then
@@ -208,9 +203,7 @@ elseif opt.model == 'convnet' then
          model:add(nn.Dropout())
       end
       model:add(nn.Linear(nstates[3], noutputs))
-      if opt.dropout then
-         model:add(nn.Dropout())
-      end
+
 
    else 
       -- a typical convolutional network, with locally-normalized hidden
@@ -252,9 +245,7 @@ elseif opt.model == 'convnet' then
          model:add(nn.Dropout())
       end
       model:add(nn.Linear(nstates[3], noutputs))
-      if opt.dropout then
-         model:add(nn.Dropout())
-      end
+
    end
 else
 
