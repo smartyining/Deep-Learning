@@ -86,7 +86,7 @@ timer = torch.Timer()
 
 for epoch=1, opt.maxEpoch do
    train(epoch)
-   test(testData)
+   test(valData)
 end
 print('Time elapsed for training' .. timer:time().real .. ' seconds')
 
