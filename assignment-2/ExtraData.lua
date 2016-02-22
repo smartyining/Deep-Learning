@@ -1,3 +1,8 @@
+-- This is used to load unlabeled data
+-- Please run provider.lua before this one to download 'extra.t7b'
+-- Also, current scripts only use 10% of unlabel data because original 
+-- size will be too large to fit in.
+
 require 'nn'
 require 'image'
 require 'xlua'
@@ -71,7 +76,6 @@ end
 
 
 
------------ main function -----------
 
 
 
