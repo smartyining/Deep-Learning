@@ -57,7 +57,7 @@ end
 
 print(model)
 
-esize = 100
+esize = 700
 
 print(c.blue '==>' ..' loading data')
 provider = torch.load 'provider.t7'
@@ -68,10 +68,14 @@ provider.valData.data = provider.valData.data:float()
 --load extra data
 ext = torch.load 'ExtraData.t7'
 
+shuffle = torch.randperm(esize):type('torch.LongTensor')
+
 ext.trainData.data = ext.trainData.data:float():narrow(1,1,esize)
 ext.trainData.labels = ext.trainData.labels:float():narrow(1,1,esize)
 
-print(ext.trainData.data)
+ext.trainData.data = ext.trainData.data:index(1,shuffle)
+ext.trainData.labels = ext.trainData.labels:index(1,shuffle)
+
 cdata = torch.cat(ext.trainData.data, provider.trainData.data,1)
 clabel = torch.cat(ext.trainData.labels, provider.trainData.labels,1)
 --change to 10 for un-aug
@@ -103,7 +107,7 @@ function train()
   model:training()
   epoch = epoch or 1
 
-extsize = 1000
+extsize = 2000
 
   -- drop learning rate every "epoch_step" epochs
   if epoch % opt.epoch_step == 0 then optimState.learningRate = optimState.learningRate/2 end
