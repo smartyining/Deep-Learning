@@ -57,12 +57,14 @@ end
 
 print(model)
 
-esize = 1000
+esize = 100
 
 print(c.blue '==>' ..' loading data')
 provider = torch.load 'provider.t7'
 provider.trainData.data = provider.trainData.data:float()
 provider.valData.data = provider.valData.data:float()
+
+
 --load extra data
 ext = torch.load 'ExtraData.t7'
 
