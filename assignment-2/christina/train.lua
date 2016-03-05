@@ -57,13 +57,18 @@ end
 
 print(model)
 
+esize = 1000
+
 print(c.blue '==>' ..' loading data')
 provider = torch.load 'provider.t7'
 provider.trainData.data = provider.trainData.data:float()
 provider.valData.data = provider.valData.data:float()
 --load extra data
 ext = torch.load 'ExtraData.t7'
-ext.trainData.data = ext.trainData.data:float()
+
+ext.trainData.data = ext.trainData.data:float():narrow(1,1,esize)
+ext.trainData.labels = ext.trainData.labels:float():narrow(1,1,esize)
+
 print(ext.trainData.data)
 cdata = torch.cat(ext.trainData.data, provider.trainData.data,1)
 clabel = torch.cat(ext.trainData.labels, provider.trainData.labels,1)
@@ -95,6 +100,8 @@ optimState = {
 function train()
   model:training()
   epoch = epoch or 1
+
+extsize = 1000
 
   -- drop learning rate every "epoch_step" epochs
   if epoch % opt.epoch_step == 0 then optimState.learningRate = optimState.learningRate/2 end
