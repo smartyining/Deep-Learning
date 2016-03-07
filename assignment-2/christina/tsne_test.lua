@@ -1,3 +1,4 @@
+require 'image'
 m = require 'manifold';
 N = 2000
 mnist = require 'mnist';
