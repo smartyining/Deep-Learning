@@ -24,13 +24,22 @@ end
 
 -- load training data and separate to training/validation
 print('==> loading training data')
-data_dir = '/home/yx887/documents/ds-ga-1008/dl-a2/discriminative'
-loaded = matio.load(paths.concat(data_dir, 'train.mat'))
-n = loaded.X:size(1)
-trsize = 4500
-vasize = 500
-loaded.X = loaded.X:double():div(255):reshape(n, 3, 96, 96):transpose(3, 4)
+data_dir ='.'
 
+provider = torch.load 'provider.t7'
+
+provider.trainData.data = provider.trainData.data:float()
+provider.valData.data = provider.valData.data:float()
+
+trdata = provider.trainData.data
+vdata = provider.valData.data
+
+nt = trdata:size(1)
+nv = vdata:size(1)
+
+trdata = trdata:double():div(255):reshape(nt, 3, 96, 96):transpose(3, 4)
+vadata = vdata:double():div(255):reshape(nv, 3, 96, 96):transpose(3, 4)
+--[[
 trdata = {
    data = loaded.X[{{1, trsize}}],
    labels = loaded.y[{{1, trsize}}],
@@ -41,18 +50,18 @@ vadata = {
    labels = loaded.y[{{trsize+1, trsize+vasize}}],
    size = vasize
 }
-
+--]]
 -------------------------------------------------------------------
 print('==> loading model')
-mod_dir = '/home/yx887/documents/ds-ga-1008/dl-a2/discriminative'
-model_file = 'model_2000.net'
+mod_dir = '.'
+model_file = 'model.net'
 model = torch.load(paths.concat(mod_dir, model_file))
 if opt.type == 'cuda' then
    model:cuda()
 elseif opt.type == 'double' then
    model:double()
 end
-mean_file = 'mean_2000.t7'
+mean_file = 'mean.t7'
 mean = torch.load(paths.concat(mod_dir, mean_file))
 
 function get_features(data, mean, model, stride)

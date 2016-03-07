@@ -33,8 +33,8 @@ torch.manualSeed(opt.seed)
 ---------------------------------------------------------------------
 print('==> loading training data')
 
-data_dir = '/scratch/yx887/courses/ds-ga-1008/dl-a2/'
-src_dir = '/home/yx887/documents/ds-ga-1008/dl-a2/discriminative'
+data_dir = '.'
+src_dir = '.'
 
 loaded = torch.load(paths.concat(data_dir, 'train3_4000x120.t7'))
 n_im = 4000
@@ -70,7 +70,7 @@ mean = trainData.data:mean(1)
 trainData.data:add(-1, mean:expand(trsize, 3, 32, 32))
 testData.data:add(-1, mean:expand(tesize, 3, 32, 32))
 
-torch.save('mean3_4000.t7', mean)
+torch.save('mean.t7', mean)
 ----------------------------------------------------------------------
 print('==> executing all')
 

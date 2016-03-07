@@ -14,7 +14,7 @@ require 'torch'
 require 'image'
 require 'xlua'
 require 'unsup'
-
+dofile '../ExtraData.lua'
 ----------------------------------------------------------------------
 -- parse command line arguments
 if not opt then
@@ -173,12 +173,12 @@ function patchify(data, patch_size, k)
 end
 
 print('==> loading images')
-load_dir = '/scratch/courses/DSGA1008/A2/binary'
+--load_dir = '/scratch/courses/DSGA1008/A2/binary'
 unlabeled_file = 'unlabeled_X.bin'
-save_dir = '/scratch/yx887/courses/ds-ga-1008/dl-a2'
+save_dir ='.' 
 
 -- Open the files and set little endian encoding
-data_fd = torch.DiskFile(paths.concat(load_dir, unlabeled_file), "r", true)
+--[[data_fd = torch.DiskFile(paths.concat(load_dir, unlabeled_file), "r", true)
 data_fd:binary():littleEndianEncoding()
 
 -- Create and read the data
@@ -186,6 +186,10 @@ data = torch.ByteTensor(100000, 3, 96, 96)
 data_fd:readByte(data:storage())
 print('==> loaded')
 -- Because data is in column-major, transposing the last 2 dimensions gives result that can be correctly visualized
+--]]
+
+ext=torch.load 'ExtraData.t7'
+data = ext.trainData.data
 
 n_unlabeled = data:size()[1]
 patch_size = 32
